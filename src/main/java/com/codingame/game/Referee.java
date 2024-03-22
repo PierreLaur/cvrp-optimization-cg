@@ -26,15 +26,9 @@ public class Referee extends AbstractReferee {
     @Override
     public void init() {
         // Initialize your game here.
-        gameManager.setTurnMaxTime(5000);
+        gameManager.setTurnMaxTime(10000);
         gameManager.setFrameDuration(1000);
         input = (ArrayList<String>) gameManager.getTestCaseInput();
-
-        try {
-            this.instance = new Instance(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -69,6 +63,13 @@ public class Referee extends AbstractReferee {
 
     private Status checkOutput(List<String> outputs_list) {
 
+        try {
+            this.instance = new Instance(input);
+        } catch (IOException e) {
+            System.err.println("Error parsing test input");
+            e.printStackTrace();
+        }
+
         if (outputs_list.size() != 1) {
             gameManager.loseGame("You did not send 1 output in your turn.");
             return Status.LOSS;
@@ -85,28 +86,44 @@ public class Referee extends AbstractReferee {
 
         for (String output : outputs) {
             int[] nodes;
+
+            if (output.equals("")) {
+                continue;
+            }
+
             try {
-                String[] nodes_str = output.split(" ");
+                String[] nodes_str = output.trim().split(" ");
                 nodes = Arrays.stream(nodes_str).mapToInt(Integer::parseInt).toArray();
             } catch (NumberFormatException e) {
                 gameManager.loseGame("Output contains non-integer values");
                 return Status.LOSS;
-
             }
 
             if (nodes.length < 1) {
                 gameManager.loseGame("Each route must contain at least 1 index");
                 return Status.LOSS;
-
             }
 
             this.total_distance += instance.distance(0, nodes[0]);
             for (int i = 0; i < nodes.length; i++) {
                 int node = nodes[i];
-                if (node <= 0 || node >= instance.n) {
-                    gameManager.loseGame("Customer index out of bounds");
-                    return Status.LOSS;
 
+                if (node == 0) {
+                    gameManager.loseGame(
+                            "Customer index " + node
+                                    + " out of bounds ! The depot (index 0) should not be included in your output");
+                    return Status.LOSS;
+                }
+
+                if (node < 0) {
+                    gameManager.loseGame("Customer index " + node + " out of bounds !");
+                    return Status.LOSS;
+                }
+
+                if (node >= this.instance.n) {
+                    gameManager.loseGame("Customer index " + node + " out of bounds ! There are only " + this.instance.n
+                            + " customers so the last valid index is " + (this.instance.n - 1));
+                    return Status.LOSS;
                 }
 
                 if (visited_nodes.contains(node)) {
