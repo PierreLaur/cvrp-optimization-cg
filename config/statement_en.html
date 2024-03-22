@@ -1,0 +1,153 @@
+<div class="statement-body">
+    <div class="statement-section statement-goal">
+        <h2><span class="icon icon-goal">&nbsp;</span><span>Capacitated Vehicle Routing</span></h2>
+        <div class="question-statement">
+            In the <a href="https://en.wikipedia.org/wiki/Vehicle_routing_problem">Vehicle Routing Problem</a>, you must serve a
+            set of customers with a fleet of vehicles. <br />
+            In the <i>Capacitated</i> variant, vehicles have a limited capacity. <br />
+            <b>You must find the shortest possible set of routes</b>.
+        </div>
+    </div>
+    <!-- RULES -->
+    <div class="statement-section statement-rules">
+        <h1>
+            <span class="icon icon-rules">&nbsp;</span>
+            <span>Rules</span>
+        </h1>
+        <div>
+            <div class="statement-rules-content">
+                <ul>
+                    <li>The vehicles start from the <b>depot</b> (index 0) and must return to it<br /></li>
+                    <li>Every customer should be visited exactly once.<br /></li>
+                    <li>
+                        For each route, the sum of the <b>demands</b> of the customers visited must not exceed the capacity of the
+                        vehicles.<br />
+                    </li>
+                    <li>
+                        The distance between two points is Euclidean - dist(a, b) = sqrt((x<sub>a</sub> - x<sub>b</sub>)<sup
+                            >2</sup
+                        >
+                        + (y<sub>a</sub> - y<sub>b</sub>)<sup>2</sup>)
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROTOCOL -->
+    <div class="statement-section statement-protocol">
+        <h1>
+            <span class="icon icon-protocol">&nbsp;</span>
+            <span>Game Input</span>
+        </h1>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="text">
+                The program must first read the given inputs, then output a single line representing the vehicle routes.
+            </div>
+        </div>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Input</div>
+            <div class="text">
+                <p><span class="statement-lineno">Line 1: </span>an integer <var>N</var>, the number of customers</p>
+                <p><span class="statement-lineno">Line 2: </span>an integer <var>K</var>, the number of vehicles</p>
+                <p><span class="statement-lineno">Line 3: </span>an integer <var>C</var>, the capacity of the vehicles</p>
+                <p>
+                    <span class="statement-lineno">Next <var>N</var> lines: </span>4 integers <var>id</var> <var>X</var>
+                    <var>Y</var> <var>D</var>, where <var>id</var> is the index of the customer, <var>X</var> and <var>Y</var> are
+                    the coordinates, and <var>D</var> is the demand
+                </p>
+            </div>
+        </div>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Output</div>
+            <div class="text">
+                <p>A single line containing the tours separated by a semicolon</p>
+                <p>Each tour must be the indices of the customers separated by a space</p>
+                <p>The depot (0) should not be included in the output</p>
+            </div>
+        </div>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Constraints</div>
+            <div class="text">
+                <const>5</const> <= <var>N</var> <= <const>1001</const><br />
+                <var>X</var> >= <const>0</const><br />
+                <var>Y</var> >= <const>0</const><br />
+                <br />Response time should be ≤ <const>10</const> seconds.
+            </div>
+        </div>
+    </div>
+
+    <!-- EXAMPLES -->
+    <div class="statement-section statement-examples">
+        <h1>
+            <span class="icon icon-example">&nbsp;</span>
+            <span>Example</span>
+        </h1>
+
+        <div class="statement-examples-text">
+            Given the input of the first test case :<br />
+            &emsp;5 4 10 &emsp;-> N = 5, K = 4, C = 10<br />
+            &emsp;0 0 0 0 &nbsp;&nbsp;&nbsp;-> depot at (0,0) - no demand<br />
+            &emsp;1 0 10 3 &nbsp;&nbsp;-> customer 1 at (0,10) demand=3 <br />
+            &emsp;2 -10 10 3 -> customer 2 at (-10,10) demand=3<br />
+            &emsp;3 0 -10 3 &nbsp;-> customer 3 at (0,-10) demand=3<br />
+            &emsp;4 10 -10 3 -> customer 4 at (10,-10) demand=3<br />
+
+            Some example outputs in the correct format :<br />
+
+            <ul>
+                <li>
+                    <b>1 2 3;4</b><br />
+                    The first vehicle goes 0 -> 1 -> 2 -> 3 -> 0. The second vehicle goes 0 -> 4 -> 0<br />
+                    The distance is dist(0, 1) + dist(1, 2) + dist(2, 3) + dist(3, 0) + dist(0, 4) + dist(0, 4) = 10 + 10 +
+                    sqrt(500) + 10 + sqrt(200) + sqrt(200) ~= 80.6
+                </li>
+                <li>
+                    <b>4 2 1 3</b><br />
+                    The first vehicle visits all 4 customers in this order.<br />
+                    This solution is invalid : the sum of demands is 3 + 3 + 3 + 3 > C = 10
+                </li>
+                <li>
+                    <b>1;2 4;3 2</b><br />
+                    This solution is invalid : Customer 2 is visited twice
+                </li>
+                <li>
+                    <b>1;3 4</b><br />
+                    This solution is invalid : Customer 2 is not visited
+                </li>
+                <li>
+                    <b>1 2;3 4</b><br />
+                    This solution is valid and optimal. The distance is dist(0, 1) + dist(1, 2) + dist(2, 0) + dist(0, 3) +
+                    dist(3, 4) + dist(4, 0) = 10 + 10 + sqrt(200) + 10 + 10 + sqrt(200) ~= 68.3
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- WARNING -->
+    <div class="statement-section statement-warning">
+        <h1>
+            <span class="icon icon-warning">&nbsp;</span>
+            <span>Note</span>
+        </h1>
+        <div class="statement-warning-content">
+            <ul>
+                <li>
+                    The VRP is a classical NP-Hard problem. Finding an optimal solution is incredibly difficult, so you should use
+                    approximate algorithms.<br />
+                    The test instances are from the
+                    <a href="http://vrp.atd-lab.inf.puc-rio.br/index.php/en/">CVRPLib</a> (except the 3 first ones). You are
+                    welcome to compare your test results to the known optima. Validation instances will be similar but different
+                    to prevent hard-coded solutions.
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

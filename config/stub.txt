@@ -1,0 +1,22 @@
+read N:int
+read K:int
+read C:int
+loop N read ID:int X:int Y:int D:int
+write 1 2 3;4
+
+INPUT
+N: The number of customers
+K: The number of vehicles
+C: The capacity of the vehicles
+index: The index of the customer (0 is the depot)
+X: The x coordinate of the customer
+Y: The y coordinate of the customer
+D: The demand
+
+OUTPUT
+A single line containing the tours separated by a semicolon (;)
+Each tour must be the indices of the customers separated by a space ( )
+The depot (0) should not be included in the output
+
+STATEMENT
+Can you handle this classical NP-Hard problem ?
