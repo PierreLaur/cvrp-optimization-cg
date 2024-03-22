@@ -53,12 +53,10 @@ public class Solution {
 
         HashMap<Integer, Customer> customers = new HashMap<>();
 
-        int n, k, capacity;
-
         Scanner scanner = new Scanner(System.in);
-        n = scanner.nextInt();
-        k = scanner.nextInt();
-        capacity = scanner.nextInt();
+        int n = scanner.nextInt();
+        int k = scanner.nextInt();
+        int capacity = scanner.nextInt();
         for (int i = 0; i < n; i++) {
             int id = scanner.nextInt();
             int x = scanner.nextInt();
@@ -67,17 +65,15 @@ public class Solution {
             customers.put(id, new Customer(id, x, y, demand));
         }
 
-        // List<List<Integer>> tours = solve_trivial(n, k, capacity, customers);
+        List<List<Integer>> tours = solve_trivial(n, k, capacity, customers);
 
-        // String solution = "";
+        String solution = "";
 
-        // for (List<Integer> tour : tours) {
-        // solution += tour.stream().map(Object::toString).collect(Collectors.joining("
-        // ")) + ";";
-        // }
+        for (List<Integer> tour : tours) {
+            solution += tour.stream().map(Object::toString).collect(Collectors.joining(" ")) + ";";
+        }
 
-        // System.out.println(solution);
-        System.out.println(";1 2 ;;4 3 ;");
+        System.out.println(solution);
 
     }
 }

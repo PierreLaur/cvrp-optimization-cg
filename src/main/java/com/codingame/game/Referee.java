@@ -25,14 +25,22 @@ public class Referee extends AbstractReferee {
 
     @Override
     public void init() {
-        // Initialize your game here.
+        gameManager.setFirstTurnMaxTime(10000);
         gameManager.setTurnMaxTime(10000);
         gameManager.setFrameDuration(1000);
         input = (ArrayList<String>) gameManager.getTestCaseInput();
+
+        try {
+            this.instance = new Instance(input);
+        } catch (IOException e) {
+            System.err.println("Error parsing test input");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void gameTurn(int turn) {
+
         Player player = gameManager.getPlayer();
         for (String line : input) {
             player.sendInputLine(line);
@@ -62,13 +70,6 @@ public class Referee extends AbstractReferee {
     }
 
     private Status checkOutput(List<String> outputs_list) {
-
-        try {
-            this.instance = new Instance(input);
-        } catch (IOException e) {
-            System.err.println("Error parsing test input");
-            e.printStackTrace();
-        }
 
         if (outputs_list.size() != 1) {
             gameManager.loseGame("You did not send 1 output in your turn.");
