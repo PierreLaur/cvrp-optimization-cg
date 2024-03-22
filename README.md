@@ -2,6 +2,8 @@ The CVRP as a [CodinGame optimization game](https://www.codingame.com/contribute
 
 TODO  : french statement  
 TODO  : visualization  
+TODO  : validation instances  
+TODO  : make the third test case useful
 TODO  : optimal value of instances 2 and 3  
 TODO  : output the optimality gap  
 TODO  : maybe think about the theme  
