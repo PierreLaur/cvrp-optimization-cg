@@ -72,7 +72,7 @@ public class Referee extends AbstractReferee {
     private Status checkOutput(List<String> outputs_list) {
 
         if (outputs_list.size() != 1) {
-            gameManager.loseGame("You did not send 1 output in your turn.");
+            gameManager.loseGame("You did not send 1 output in your turn");
             return Status.LOSS;
         }
 
@@ -106,6 +106,7 @@ public class Referee extends AbstractReferee {
             }
 
             this.total_distance += instance.distance(0, nodes[0]);
+            int weight = 0;
             for (int i = 0; i < nodes.length; i++) {
                 int node = nodes[i];
 
@@ -127,8 +128,14 @@ public class Referee extends AbstractReferee {
                     return Status.LOSS;
                 }
 
+                weight += this.instance.customers.get(node).demand;
+                if (weight > this.instance.capacity) {
+                    gameManager.loseGame("Capacity exceeded for tour " + Arrays.toString(nodes));
+                    return Status.LOSS;
+                }
+
                 if (visited_nodes.contains(node)) {
-                    gameManager.loseGame("Customers must not be visited more than once");
+                    gameManager.loseGame("Customers must not be visited more than once !");
                     return Status.LOSS;
 
                 }
@@ -143,7 +150,7 @@ public class Referee extends AbstractReferee {
         }
 
         if (visited_nodes.size() != instance.n - 1) {
-            gameManager.loseGame("Not all customers have been visited");
+            gameManager.loseGame("Some customers have not been served !");
             return Status.LOSS;
         }
         return Status.WIN;

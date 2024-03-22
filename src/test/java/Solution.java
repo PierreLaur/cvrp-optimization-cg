@@ -65,15 +65,17 @@ public class Solution {
             customers.put(id, new Customer(id, x, y, demand));
         }
 
-        List<List<Integer>> tours = solve_trivial(n, k, capacity, customers);
+        // List<List<Integer>> tours = solve_trivial(n, k, capacity, customers);
 
-        String solution = "";
+        // String solution = "";
 
-        for (List<Integer> tour : tours) {
-            solution += tour.stream().map(Object::toString).collect(Collectors.joining(" ")) + ";";
-        }
+        // for (List<Integer> tour : tours) {
+        // solution += tour.stream().map(Object::toString).collect(Collectors.joining("
+        // ")) + ";";
+        // }
 
-        System.out.println(solution);
+        // System.out.println(solution);
+        System.out.println("1 2 3 ;3 4");
 
     }
 }
