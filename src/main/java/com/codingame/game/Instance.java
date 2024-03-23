@@ -79,6 +79,8 @@ public class Instance {
     public double distance(int a, int b) {
         Customer c1 = customers.get(a);
         Customer c2 = customers.get(b);
+        System.err.println("a = " + a + ", b = " + b + " n = " + n);
+        System.err.println("c1 = " + c1 + ", c2 = " + c2);
         return Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2));
     }
 }

@@ -128,6 +128,8 @@ public class Referee extends AbstractReferee {
 
     private Status checkOutput(List<String> outputs_list) {
 
+        Status status = Status.WIN;
+
         if (outputs_list.size() != 1) {
             gameManager.loseGame("You did not send 1 output in your turn");
             return Status.LOSS;
@@ -135,14 +137,10 @@ public class Referee extends AbstractReferee {
 
         String[] outputs = outputs_list.get(0).split(";");
 
-        if (outputs.length > this.instance.k) {
-            gameManager.loseGame("Solution must not use more than " + instance.k + " vehicles");
-            return Status.LOSS;
-        }
-
         HashSet<Integer> visited_nodes = new HashSet<>();
 
         int colorIndex = 0;
+        ArrayList<int[]> tours = new ArrayList<>();
         for (String output : outputs) {
             int[] nodes;
 
@@ -158,12 +156,6 @@ public class Referee extends AbstractReferee {
                 return Status.LOSS;
             }
 
-            if (nodes.length < 1) {
-                gameManager.loseGame("Each route must contain at least 1 index");
-                return Status.LOSS;
-            }
-
-            this.total_distance += instance.distance(0, nodes[0]);
             int weight = 0;
             for (int i = 0; i < nodes.length; i++) {
                 int node = nodes[i];
@@ -189,36 +181,45 @@ public class Referee extends AbstractReferee {
                 weight += this.instance.customers.get(node).demand;
                 if (weight > this.instance.capacity) {
                     gameManager.loseGame("Capacity exceeded for tour " + Arrays.toString(nodes));
-                    return Status.LOSS;
+                    status = Status.LOSS;
                 }
 
                 if (visited_nodes.contains(node)) {
-                    gameManager.loseGame("Customers must not be visited more than once !");
-                    return Status.LOSS;
-
+                    gameManager.loseGame("Customer " + node + " is visited more than once !");
+                    status = Status.LOSS;
                 }
                 visited_nodes.add(node);
-
-                if (i < nodes.length - 1) {
-                    this.total_distance += instance.distance(node, nodes[i + 1]);
-                } else {
-                    this.total_distance += instance.distance(node, 0);
-                }
             }
 
-            drawLine(0, nodes[0], colorIndex);
-            for (int i = 0; i < nodes.length - 1; i++) {
-                drawLine(nodes[i], nodes[i + 1], colorIndex);
-            }
-            drawLine(nodes[nodes.length - 1], 0, colorIndex);
-            colorIndex = (colorIndex + 1) % colors.size();
+            tours.add(nodes);
+
+        }
+
+        if (tours.size() > this.instance.k) {
+            gameManager.loseGame("Too many vehicles used !");
+            status = Status.LOSS;
         }
 
         if (visited_nodes.size() != instance.n - 1) {
             gameManager.loseGame("Some customers have not been served !");
-            return Status.LOSS;
+            status = Status.LOSS;
         }
 
-        return Status.WIN;
+        for (int[] tour : tours) {
+            this.total_distance += instance.distance(0, tour[0]);
+            this.total_distance += instance.distance(tour[tour.length - 1], 0);
+            for (int i = 0; i < tour.length - 2; i++) {
+                this.total_distance += instance.distance(tour[i], tour[i + 1]);
+            }
+
+            drawLine(0, tour[0], colorIndex);
+            for (int i = 0; i < tour.length - 1; i++) {
+                drawLine(tour[i], tour[i + 1], colorIndex);
+            }
+            drawLine(tour[tour.length - 1], 0, colorIndex);
+            colorIndex = (colorIndex + 1) % colors.size();
+        }
+
+        return status;
     }
 }
