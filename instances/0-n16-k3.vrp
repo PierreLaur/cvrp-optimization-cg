@@ -1,5 +1,5 @@
 NAME : 0-n16-k3
-COMMENT : (Example instance, No of trucks: 3, Optimal value: 0)
+COMMENT : (Example instance, No of trucks: 3, Optimal value: ?)
 TYPE : CVRP
 DIMENSION : 16
 EDGE_WEIGHT_TYPE : EUC_2D 

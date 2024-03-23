@@ -6,13 +6,18 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
+import com.codingame.game.Instance.Customer;
 import com.codingame.gameengine.core.AbstractReferee;
 import com.codingame.gameengine.core.SoloGameManager;
+import com.codingame.gameengine.module.entities.GraphicEntityModule;
 import com.google.inject.Inject;
 
 public class Referee extends AbstractReferee {
     @Inject
     private SoloGameManager<Player> gameManager;
+
+    @Inject
+    private GraphicEntityModule graphicEntityModule;
 
     private Instance instance;
     private double total_distance = 0.0;
@@ -22,6 +27,9 @@ public class Referee extends AbstractReferee {
     public enum Status {
         WIN, LOSS
     }
+
+    private List<Integer> colors = Arrays.asList(0xFF0000, 0x00FF00, 0x0000FF, 0x00FFFF, 0xFF00FF, 0x808080, 0x800000,
+            0x008000, 0x800080, 0x008080, 0x808000, 0x000080, 0xC0C0C0);
 
     @Override
     public void init() {
@@ -35,6 +43,37 @@ public class Referee extends AbstractReferee {
         } catch (IOException e) {
             System.err.println("Error parsing test input");
             e.printStackTrace();
+        }
+
+        // Set the background
+        graphicEntityModule
+                .createRectangle()
+                .setX(0).setY(0)
+                .setWidth(1920)
+                .setHeight(1080)
+                .setFillColor(0xD3D3D3);
+
+        // Draw the depot
+        int depotx = this.instance.customers.get(0).x;
+        int depoty = this.instance.customers.get(0).y;
+        graphicEntityModule
+                .createRectangle()
+                .setLineColor(0x000000)
+                .setLineWidth(5)
+                .setFillColor(0xFFFFFF)
+                .setX(depotx - 15)
+                .setY(depoty - 15)
+                .setWidth(30)
+                .setHeight(30);
+
+        // Draw the customers
+        for (int i = 1; i < this.instance.n; i++) {
+            graphicEntityModule
+                    .createCircle()
+                    .setRadius(10)
+                    .setFillColor(0x000000)
+                    .setX(this.instance.customers.get(i).x)
+                    .setY(this.instance.customers.get(i).y);
         }
     }
 
@@ -69,6 +108,24 @@ public class Referee extends AbstractReferee {
         gameManager.putMetadata("total distance", String.valueOf(Math.round(total_distance)));
     }
 
+    private void drawLine(int a, int b, int colorIndex) {
+
+        Customer c1 = instance.customers.get(a);
+        Customer c2 = instance.customers.get(b);
+
+        Integer color = colors.get(colorIndex);
+
+        graphicEntityModule.createLine()
+                .setX(c1.x)
+                .setY(c1.y)
+                .setX2(c2.x)
+                .setY2(c2.y)
+                .setFillColor(color)
+                .setLineColor(color)
+                .setLineWidth(3);
+        graphicEntityModule.commitWorldState(0);
+    }
+
     private Status checkOutput(List<String> outputs_list) {
 
         if (outputs_list.size() != 1) {
@@ -85,6 +142,7 @@ public class Referee extends AbstractReferee {
 
         HashSet<Integer> visited_nodes = new HashSet<>();
 
+        int colorIndex = 0;
         for (String output : outputs) {
             int[] nodes;
 
@@ -147,12 +205,20 @@ public class Referee extends AbstractReferee {
                     this.total_distance += instance.distance(node, 0);
                 }
             }
+
+            drawLine(0, nodes[0], colorIndex);
+            for (int i = 0; i < nodes.length - 1; i++) {
+                drawLine(nodes[i], nodes[i + 1], colorIndex);
+            }
+            drawLine(nodes[nodes.length - 1], 0, colorIndex);
+            colorIndex = (colorIndex + 1) % colors.size();
         }
 
         if (visited_nodes.size() != instance.n - 1) {
             gameManager.loseGame("Some customers have not been served !");
             return Status.LOSS;
         }
+
         return Status.WIN;
     }
 }
