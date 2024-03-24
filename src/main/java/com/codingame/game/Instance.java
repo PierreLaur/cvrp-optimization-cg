@@ -25,6 +25,8 @@ public class Instance {
 
     int n, k, capacity;
     Map<Integer, Customer> customers = new HashMap<>();
+    public ArrayList<Integer> scaled_x = new ArrayList<>();
+    public ArrayList<Integer> scaled_y = new ArrayList<>();
 
     public Instance(ArrayList<String> input) throws IOException {
 
@@ -32,33 +34,30 @@ public class Instance {
         this.k = Integer.parseInt(input.get(1));
         this.capacity = Integer.parseInt(input.get(2));
 
-        ArrayList<Integer> xcoords = new ArrayList<>();
-        ArrayList<Integer> ycoords = new ArrayList<>();
-        ArrayList<Integer> demands = new ArrayList<>();
-
         for (int i = 3; i < this.n + 3; i++) {
             String[] cust_inputs = input.get(i).split(" ");
-            // int id = Integer.parseInt(cust_inputs[0]);
-            xcoords.add(Integer.parseInt(cust_inputs[1]));
-            ycoords.add(Integer.parseInt(cust_inputs[2]));
-            demands.add(Integer.parseInt(cust_inputs[3]));
-            // int x = Integer.parseInt(cust_inputs[1]);
-            // int y = Integer.parseInt(cust_inputs[2]);
-            // int demand = Integer.parseInt(cust_inputs[3]);
-            // this.customers.put(id, new Customer(id, x, y, demand));
+            int id = Integer.parseInt(cust_inputs[0]);
+            int x = Integer.parseInt(cust_inputs[1]);
+            int y = Integer.parseInt(cust_inputs[2]);
+            this.scaled_x.add(x);
+            this.scaled_y.add(y);
+            int demand = Integer.parseInt(cust_inputs[3]);
+            this.customers.put(id, new Customer(id, x, y, demand));
         }
 
-        int minx = xcoords.stream().min(Integer::compareTo).get();
-        int maxx = xcoords.stream().max(Integer::compareTo).get();
-        int miny = ycoords.stream().min(Integer::compareTo).get();
-        int maxy = ycoords.stream().max(Integer::compareTo).get();
+        int minx = scaled_x.stream().min(Integer::compareTo).get();
+        int maxx = scaled_x.stream().max(Integer::compareTo).get();
+        int miny = scaled_y.stream().min(Integer::compareTo).get();
+        int maxy = scaled_y.stream().max(Integer::compareTo).get();
+
         // scale the coordinates for display
         int width = maxx - minx;
         int height = maxy - miny;
         for (int i = 0; i < this.n; i++) {
-            int x = (int) (50.0 + (xcoords.get(i) - minx) * 1820.0 / width);
-            int y = (int) (50.0 + (ycoords.get(i) - miny) * 980.0 / height);
-            this.customers.put(i, new Customer(i, x, y, demands.get(i)));
+            int x = (int) (50.0 + (scaled_x.get(i) - minx) * 1820.0 / width);
+            scaled_x.set(i, x);
+            int y = (int) (50.0 + (scaled_y.get(i) - miny) * 980.0 / height);
+            scaled_y.set(i, y);
         }
 
     }
@@ -79,8 +78,6 @@ public class Instance {
     public double distance(int a, int b) {
         Customer c1 = customers.get(a);
         Customer c2 = customers.get(b);
-        System.err.println("a = " + a + ", b = " + b + " n = " + n);
-        System.err.println("c1 = " + c1 + ", c2 = " + c2);
         return Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2));
     }
 }
