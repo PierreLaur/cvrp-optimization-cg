@@ -24,6 +24,7 @@ public class Instance {
     }
 
     int n, k, capacity;
+    public int optimalValue;
     Map<Integer, Customer> customers = new HashMap<>();
     public ArrayList<Integer> scaled_x = new ArrayList<>();
     public ArrayList<Integer> scaled_y = new ArrayList<>();
@@ -58,6 +59,37 @@ public class Instance {
             scaled_x.set(i, x);
             int y = (int) (50.0 + (scaled_y.get(i) - miny) * 980.0 / height);
             scaled_y.set(i, y);
+        }
+
+        // Set the optimal value
+        int[] optimalValues = { 68, 279, 533, 1212, 784, 778, 669, 822, 937, 1073, 1010, 1073, 1354, 1174, 1159, 1763,
+                820, 1034, 1015, 1275 };
+        int[] n_values = {
+                5,
+                16,
+                21,
+                26,
+                32,
+                34,
+                37,
+                39,
+                44,
+                48,
+                53,
+                55,
+                60,
+                65,
+                69,
+                80,
+                101,
+                121,
+                151,
+                200,
+        };
+        for (int i = 0; i < optimalValues.length; i++) {
+            if (n == n_values[i]) {
+                this.optimalValue = optimalValues[i];
+            }
         }
 
     }

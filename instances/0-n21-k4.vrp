@@ -1,6 +1,6 @@
 21 4 85
 NAME : 0-n21-k4
-COMMENT : (Example instances, No of trucks: 4, Optimal value: ?)
+COMMENT : (Example instances, No of trucks: 4, Optimal value: 533)
 TYPE : CVRP
 DIMENSION : 21
 EDGE_WEIGHT_TYPE : EUC_2D 

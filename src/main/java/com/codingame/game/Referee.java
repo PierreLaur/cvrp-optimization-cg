@@ -3,6 +3,7 @@ package com.codingame.game;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
@@ -95,7 +96,24 @@ public class Referee extends AbstractReferee {
                 return;
             }
 
-            gameManager.winGame(String.format("Total distance: %d", Math.round(total_distance)));
+            // Calculate the optimality gap
+            double optimality_gap = Math.abs(instance.optimalValue - Math.round(total_distance))
+                    / instance.optimalValue;
+
+            String winMessage;
+            if (optimality_gap == 0.0) {
+                winMessage = "You found the optimum!! What a performance.";
+            } else if (optimality_gap < 0.05) {
+                winMessage = "Fantastic job! Your solution is nearly perfect, just a few steps away from optimal!";
+            } else if (optimality_gap < 0.20) {
+                winMessage = "Wow, that's a pretty solid solution!";
+            } else {
+                winMessage = "Nice job ! Your solution is valid";
+            }
+            winMessage += "\nTotal distance: " + Math.round(total_distance);
+            winMessage += "\nOptimality gap: " + optimality_gap;
+
+            gameManager.winGame(winMessage);
 
         } catch (TimeoutException e) {
             gameManager.loseGame("Timeout!");
