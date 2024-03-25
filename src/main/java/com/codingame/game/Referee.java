@@ -44,15 +44,12 @@ public class Referee extends AbstractReferee {
             e.printStackTrace();
         }
 
-        // Set the background
-        graphicEntityModule
-                .createRectangle()
-                .setX(0).setY(0)
-                .setWidth(1920)
-                .setHeight(1080)
-                .setFillColor(0xD3D3D3);
-        graphicEntityModule.createSprite().setImage("france.jpg");
+        setBackground();
+        drawCustomers();
 
+    }
+
+    public void drawCustomers() {
         // Draw the depot
         int depotx = this.instance.scaled_x.get(0);
         int depoty = this.instance.scaled_y.get(0);
@@ -78,6 +75,21 @@ public class Referee extends AbstractReferee {
         }
     }
 
+    public void setBackground() {
+
+        if (this.instance.backgroundFile == null) {
+            graphicEntityModule
+                    .createRectangle()
+                    .setX(0).setY(0)
+                    .setWidth(1920)
+                    .setHeight(1080)
+                    .setFillColor(0xD3D3D3);
+        } else {
+            graphicEntityModule.createSprite().setImage(this.instance.backgroundFile)
+                    .setBaseHeight(1080).setBaseWidth(1920);
+        }
+    }
+
     @Override
     public void gameTurn(int turn) {
 
@@ -96,23 +108,24 @@ public class Referee extends AbstractReferee {
                 return;
             }
 
-            // Calculate the optimality gap
-            double optimality_gap = (double) Math.abs(instance.optimalValue - Math.round(total_distance))
-                    / (double) instance.optimalValue;
+            String winMessage = "";
+            if (instance.optimalValue != 0) {
+                // Calculate the optimality gap
+                double optimality_gap = (double) Math.abs(instance.optimalValue - Math.round(total_distance))
+                        / (double) instance.optimalValue;
 
-            String winMessage;
-            if (optimality_gap == 0.0) {
-                winMessage = "You found the optimum!! What a performance.";
-            } else if (optimality_gap <= 0.05) {
-                winMessage = "Fantastic job! Your solution is nearly perfect, just a few steps away from optimal!";
-            } else if (optimality_gap <= 0.20) {
-                winMessage = "Wow, that's a pretty solid solution!";
-            } else {
-                winMessage = "Nice job ! Your solution is valid";
+                if (optimality_gap == 0.0) {
+                    winMessage += "You found the optimum!! What a performance.";
+                } else if (optimality_gap <= 0.05) {
+                    winMessage += "Fantastic job! Your solution is nearly perfect, just a few steps away from optimal!";
+                } else if (optimality_gap <= 0.20) {
+                    winMessage += "Wow, that's a pretty solid solution!";
+                } else {
+                    winMessage += "Nice job ! Your solution is valid";
+                }
+                winMessage += "\nOptimality Gap: " + (double) Math.round(optimality_gap * 1000) / 10.0 + "%";
             }
             winMessage += "\nTotal Distance: " + Math.round(total_distance);
-            winMessage += "\nOptimality Gap: " + (double) Math.round(optimality_gap * 1000) / 10.0 + "%";
-
             gameManager.winGame(winMessage);
 
         } catch (TimeoutException e) {
@@ -127,14 +140,11 @@ public class Referee extends AbstractReferee {
     }
 
     private void drawLine(int a, int b, int colorIndex) {
-
         int c1_x = instance.scaled_x.get(a);
         int c1_y = instance.scaled_y.get(a);
         int c2_x = instance.scaled_x.get(b);
         int c2_y = instance.scaled_y.get(b);
-
         Integer color = colors.get(colorIndex);
-
         graphicEntityModule.createLine()
                 .setX(c1_x)
                 .setY(c1_y)

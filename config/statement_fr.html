@@ -62,7 +62,8 @@
                     <span class="statement-lineno">Ligne 3: </span>un entier <var>n</var>, le nombre de clients (+1 pour le dépôt)
                 </p>
                 <p>
-                    <span class="statement-lineno">Prochaines <var>n</var> lignes: 4 integers pour chaque client/dépôt</span>
+                    <span class="statement-lineno">Prochaines <var>n</var> lignes:</span> 4 entiers séparés par un espace pour
+                    chaque client/dépôt
                 </p>
                 <ul>
                     <li><var>index</var>, le numéro du client (ou 0 pour le dépôt)</li>
@@ -77,7 +78,7 @@
         <div class="blk">
             <div class="title">Sortie</div>
             <div class="text">
-                <p>Une seule ligne contenant les tournées séparées par un point-virgule</p>
+                <p>Une seule ligne contenant les tournées séparées par un point-virgule.</p>
                 <p>Chaque tournée doit être les indices des clients séparés par un espace.</p>
                 <p>Le dépôt (0) ne doit pas être inclus dans la sortie.</p>
             </div>
@@ -102,7 +103,7 @@
 
         <div class="statement-examples-text">
             Pour l'entrée du premier cas de test :<br /><br />
-            <span style="display: inline-block; min-width: 100px; font-family: monospace">5 4 10</span>
+            <span style="display: inline-block; min-width: 100px; font-family: monospace">4 10 5</span>
             -> <var>k</var> = 4, <var>c</var> = 10, <var>n</var> = 5<br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">0 0 0 0</span>
             -> dépôt en (0,0) - pas de demande<br />
@@ -174,9 +175,9 @@
             <ul>
                 <li>
                     Les instances de test proviennent de la
-                    <a href="http://vrp.atd-lab.inf.puc-rio.br/index.php/en/">CVRPLib</a> (sauf les 4 premières), spécifiquement
-                    des ensembles A (Augerat, 1995) et M (Christofides et al. 1979). N'hésitez pas à comparer vos résultats de
-                    test avec les optima connus.
+                    <a href="http://vrp.atd-lab.inf.puc-rio.br/index.php/en/">CVRPLib</a>, spécifiquement du set M (Christofides
+                    et al. 1979). N'hésitez pas à comparer vos résultats de test avec les optima connus. Vous pouvez aussi
+                    utiliser d'autres instances de la librairie pour améliorer vos algorithmes.
                 </li>
                 <li>Les tests fournis et les validateurs utilisés pour le calcul du score sont similaires mais différents.</li>
             </ul>

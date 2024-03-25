@@ -61,7 +61,8 @@
                     depot)
                 </p>
                 <p>
-                    <span class="statement-lineno">Next <var>n</var> lines: 4 integers for each customer/depot</span>
+                    <span class="statement-lineno">Next <var>n</var> lines:</span> 4 space-separated integers for each
+                    customer/depot
                 </p>
                 <ul>
                     <li><var>index</var>, the index of the customer (or 0 for the depot)</li>
@@ -76,7 +77,7 @@
         <div class="blk">
             <div class="title">Output</div>
             <div class="text">
-                <p>A single line containing the tours separated by a semicolon</p>
+                <p>A single line containing the tours separated by a semicolon.</p>
                 <p>Each tour must be the indices of the customers separated by a space.</p>
                 <p>The depot (0) should not be included in the output.</p>
             </div>
@@ -101,7 +102,7 @@
 
         <div class="statement-examples-text">
             Given the input of the first test case :<br /><br />
-            <span style="display: inline-block; min-width: 100px; font-family: monospace">5 4 10</span>
+            <span style="display: inline-block; min-width: 100px; font-family: monospace">4 10 5</span>
             -> <var>k</var> = 4, <var>c</var> = 10, <var>n</var> = 5<br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">0 0 0 0</span>
             -> depot at (0,0) - no demand<br />
@@ -168,10 +169,10 @@
             </h1>
             <ul>
                 <li>
-                    The test instances are from the
-                    <a href="http://vrp.atd-lab.inf.puc-rio.br/index.php/en/">CVRPLib</a> (except the 4 first ones), specifically
-                    from set A (Augerat, 1995) and set M (Christofides et al. 1979). You are welcome to compare your test results
-                    to the known optima.
+                    The last 4 instances are from the
+                    <a href="http://vrp.atd-lab.inf.puc-rio.br/index.php/en/">CVRPLib</a>, specifically set M (Christofides et al.
+                    1979). You are welcome to compare your test results to their known optima. Feel free to use other instances
+                    from the library to tune your algorithms.
                 </li>
                 <li>Validation instances will be similar but different to prevent hard-coded solutions.</li>
             </ul>

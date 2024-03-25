@@ -1,1 +1,1 @@
-{"title": {"2": "Not Many Trucks", "1": "Not Many Trucks"}, "testIn": "3\n90\n16\n0 30 40 0\n1 37 52 7\n2 49 49 30\n3 52 64 16\n4 20 26 9\n5 40 30 21\n6 21 47 15\n7 17 63 19\n8 31 62 23\n9 52 33 11\n10 51 21 5\n11 42 41 19\n12 31 32 29\n13 5 25 23\n14 12 42 21\n15 36 16 10\n", "isTest": "true", "isValidator": "false"}
+{"title": {"2": "Seven Summits", "1": "Seven Summits"}, "testIn": "3\n85\n9\n0 997 265 0\n1 1424 372 19\n2 587 736 29\n3 155 162 23\n4 1159 558 21\n5 503 1011 10\n6 1692 564 15\n7 1751 759 3\n8 1186 280 41\n", "isTest": "true", "isValidator": "false"}

@@ -2,7 +2,9 @@ package com.codingame.game;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Instance {
@@ -25,27 +27,24 @@ public class Instance {
 
     int n, k, capacity;
     public int optimalValue;
+    String backgroundFile;
     Map<Integer, Customer> customers = new HashMap<>();
-    public ArrayList<Integer> scaled_x = new ArrayList<>();
-    public ArrayList<Integer> scaled_y = new ArrayList<>();
+    ArrayList<Integer> scaled_x = new ArrayList<>();
+    ArrayList<Integer> scaled_y = new ArrayList<>();
 
-    public Instance(ArrayList<String> input) throws IOException {
+    Integer[] noMapInstances = { 5, 101, 121, 151, 200 };
+    int[] optimalValues = {
+            68,
+            0,
+            820, 1034, 1015, 1275 // benchmark
+    };
+    int[] n_values = {
+            5,
+            16,
+            101, 121, 151, 200, // benchmark
+    };
 
-        this.k = Integer.parseInt(input.get(0));
-        this.capacity = Integer.parseInt(input.get(1));
-        this.n = Integer.parseInt(input.get(2));
-
-        for (int i = 3; i < this.n + 3; i++) {
-            String[] cust_inputs = input.get(i).split(" ");
-            int id = Integer.parseInt(cust_inputs[0]);
-            int x = Integer.parseInt(cust_inputs[1]);
-            int y = Integer.parseInt(cust_inputs[2]);
-            this.scaled_x.add(x);
-            this.scaled_y.add(y);
-            int demand = Integer.parseInt(cust_inputs[3]);
-            this.customers.put(id, new Customer(id, x, y, demand));
-        }
-
+    public void scaleCoordinates() {
         int minx = scaled_x.stream().min(Integer::compareTo).get();
         int maxx = scaled_x.stream().max(Integer::compareTo).get();
         int miny = scaled_y.stream().min(Integer::compareTo).get();
@@ -60,38 +59,38 @@ public class Instance {
             int y = (int) (50.0 + (scaled_y.get(i) - miny) * 980.0 / height);
             scaled_y.set(i, y);
         }
+    }
+
+    public Instance(ArrayList<String> input) throws IOException {
+
+        this.k = Integer.parseInt(input.get(0));
+        this.capacity = Integer.parseInt(input.get(1));
+        this.n = Integer.parseInt(input.get(2));
+
+        for (int i = 3; i < this.n + 3; i++) {
+            String[] cust_inputs = input.get(i).split(" ");
+            int id = Integer.parseInt(cust_inputs[0]);
+            int x = Integer.parseInt(cust_inputs[1]);
+            int y = Integer.parseInt(cust_inputs[2]);
+            int demand = Integer.parseInt(cust_inputs[3]);
+            this.customers.put(id, new Customer(id, x, y, demand));
+            scaled_x.add(x);
+            scaled_y.add(y);
+        }
+
+        List<Integer> noMapInstancesList = Arrays.asList(noMapInstances);
+        if (noMapInstancesList.contains(this.n)) {
+            scaleCoordinates();
+        } else {
+            backgroundFile = this.n + ".png";
+        }
 
         // Set the optimal value
-        int[] optimalValues = { 68, 279, 533, 1212, 784, 778, 669, 822, 937, 1073, 1010, 1073, 1354, 1174, 1159, 1763,
-                820, 1034, 1015, 1275 };
-        int[] n_values = {
-                5,
-                16,
-                21,
-                26,
-                32,
-                34,
-                37,
-                39,
-                44,
-                48,
-                53,
-                55,
-                60,
-                65,
-                69,
-                80,
-                101,
-                121,
-                151,
-                200,
-        };
         for (int i = 0; i < optimalValues.length; i++) {
             if (n == n_values[i]) {
                 this.optimalValue = optimalValues[i];
             }
         }
-
     }
 
     public String toString() {
