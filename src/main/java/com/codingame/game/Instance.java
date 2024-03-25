@@ -31,9 +31,9 @@ public class Instance {
 
     public Instance(ArrayList<String> input) throws IOException {
 
-        this.n = Integer.parseInt(input.get(0));
-        this.k = Integer.parseInt(input.get(1));
-        this.capacity = Integer.parseInt(input.get(2));
+        this.k = Integer.parseInt(input.get(0));
+        this.capacity = Integer.parseInt(input.get(1));
+        this.n = Integer.parseInt(input.get(2));
 
         for (int i = 3; i < this.n + 3; i++) {
             String[] cust_inputs = input.get(i).split(" ");

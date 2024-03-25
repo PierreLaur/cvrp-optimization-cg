@@ -5,7 +5,7 @@
             In the <a href="https://en.wikipedia.org/wiki/Vehicle_routing_problem">Vehicle Routing Problem</a>, you must serve a
             set of customers with a fleet of vehicles. <br />
             In the <i>Capacitated</i> variant, vehicles have a limited capacity. <br />
-            <b>You must find the shortest possible set of routes</b>.
+            <b>You must find the shortest possible set of tours</b>.
         </div>
     </div>
     <!-- RULES -->
@@ -17,10 +17,11 @@
         <div>
             <div class="statement-rules-content">
                 <ul>
-                    <li>The vehicles start from the <b>depot</b> (index 0) and must return to it<br /></li>
-                    <li>Every customer should be visited exactly once.<br /></li>
+                    <li>The vehicles start from the <b>depot</b> (index 0) and must return to it.<br /></li>
+                    <li>Every customer must be visited exactly once.<br /></li>
+                    <li>The number of tours must not exceed the number of vehicles.</li>
                     <li>
-                        For each route, the sum of the <b>demands</b> of the customers visited must not exceed the capacity of the
+                        For each tour, the sum of the <b>demands</b> of the customers visited must not exceed the capacity of the
                         vehicles.<br />
                     </li>
                     <li>
@@ -45,7 +46,7 @@
         <!-- Protocol block -->
         <div class="blk">
             <div class="text">
-                The program must first read the given inputs, then output a single line representing the vehicle routes.
+                The program must first read the given inputs, then output a single line representing the vehicle tours.
             </div>
         </div>
 
@@ -53,16 +54,21 @@
         <div class="blk">
             <div class="title">Input</div>
             <div class="text">
+                <p><span class="statement-lineno">Line 1: </span>an integer <var>k</var>, the number of vehicles</p>
+                <p><span class="statement-lineno">Line 2: </span>an integer <var>c</var>, the capacity of the vehicles</p>
                 <p>
-                    <span class="statement-lineno">Line 1: </span>an integer <var>n</var>, the number of customers (+1 for the
+                    <span class="statement-lineno">Line 3: </span>an integer <var>n</var>, the number of customers (+1 for the
                     depot)
                 </p>
-                <p><span class="statement-lineno">Line 2: </span>an integer <var>k</var>, the number of vehicles</p>
-                <p><span class="statement-lineno">Line 3: </span>an integer <var>c</var>, the capacity of the vehicles</p>
                 <p>
-                    <span class="statement-lineno">Next <var>n</var> lines: </span>4 integers for each point - <var>index</var>
-                    <var>x</var> <var>y</var> <var>demand</var>. The depot (index=0) has a demand of 0.
+                    <span class="statement-lineno">Next <var>n</var> lines: 4 integers for each customer/depot</span>
                 </p>
+                <ul>
+                    <li><var>index</var>, the index of the customer (or 0 for the depot)</li>
+                    <li><var>x</var>, the first coordinate of the customer or depot</li>
+                    <li><var>y</var>, the second coordinate of the customer or depot</li>
+                    <li><var>demand</var>, the customer's demand. The depot (<var>index</var>=0) has a demand of 0.</li>
+                </ul>
             </div>
         </div>
 
@@ -71,8 +77,8 @@
             <div class="title">Output</div>
             <div class="text">
                 <p>A single line containing the tours separated by a semicolon</p>
-                <p>Each tour must be the indices of the customers separated by a space</p>
-                <p>The depot (0) should not be included in the output</p>
+                <p>Each tour must be the indices of the customers separated by a space.</p>
+                <p>The depot (0) should not be included in the output.</p>
             </div>
         </div>
 
@@ -80,9 +86,7 @@
         <div class="blk">
             <div class="title">Constraints</div>
             <div class="text">
-                <const>5</const> <= <var>N</var> <= <const>125</const><br />
-                <var>X</var> >= <const>0</const><br />
-                <var>Y</var> >= <const>0</const><br />
+                <const>5</const> <= <var>n</var> <= <const>200</const><br />
                 <br />Response time is limited to <const>20</const> seconds.
             </div>
         </div>
@@ -96,9 +100,9 @@
         </h1>
 
         <div class="statement-examples-text">
-            Given the input of the first test case :<br />
+            Given the input of the first test case :<br /><br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">5 4 10</span>
-            -> N = 5, K = 4, C = 10<br />
+            -> <var>k</var> = 4, <var>c</var> = 10, <var>n</var> = 5<br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">0 0 0 0</span>
             -> depot at (0,0) - no demand<br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">1 0 10 3</span>
@@ -108,63 +112,60 @@
             <span style="display: inline-block; min-width: 100px; font-family: monospace">3 0 -10 3</span>
             -> customer 3 at (0,-10) demand=3<br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">4 10 -10 3</span>
-            -> customer 4 at (10,-10) demand=3<br />
+            -> customer 4 at (10,-10) demand=3<br /><br />
 
             Some example outputs in the correct format :<br />
 
             <ul>
                 <li>
                     <b style="font-family: monospace">1 2 3;4</b><br />
-                    The first vehicle goes 0 -> 1 -> 2 -> 3 -> 0. The second vehicle goes 0 -> 4 -> 0<br />
-                    The distance is dist(0, 1) + dist(1, 2) + dist(2, 3) + dist(3, 0) + dist(0, 4) + dist(0, 4) = 10 + 10 +
-                    sqrt(500) + 10 + sqrt(200) + sqrt(200) ~= 80.6
+                    The first vehicle goes 0 -> 1 -> 2 -> 3 -> 0. The second vehicle goes 0 -> 4 -> 0.<br />
+                    The distance is dist(0, 1) + dist(1, 2) + dist(2, 3) + dist(3, 0) + dist(0, 4) + dist(4, 0) = 10 + 10 +
+                    sqrt(500) + 10 + sqrt(200) + sqrt(200) ≈ 80.6.
                 </li>
                 <li>
                     <b style="font-family: monospace">4 2 1 3</b><br />
                     The first vehicle goes 0 -> 4 -> 2 -> 1 -> 3 -> 0.<br />
-                    This solution is invalid : the sum of demands is 3 + 3 + 3 + 3 > C = 10
+                    This solution is invalid : the sum of demands is 3 + 3 + 3 + 3 > <var>c</var> = 10.
                 </li>
                 <li>
                     <b style="font-family: monospace">1;2 4;3 2</b><br />
-                    This solution is invalid : Customer 2 is visited twice
+                    This solution is invalid : Customer 2 is visited twice.
                 </li>
                 <li>
                     <b style="font-family: monospace">1;3 4</b><br />
-                    This solution is invalid : Customer 2 is not visited
+                    This solution is invalid : Customer 2 is not visited.
                 </li>
                 <li>
                     <b style="font-family: monospace">1 2;3 4</b><br />
-                    This solution is valid and optimal. The distance is dist(0, 1) + dist(1, 2) + dist(2, 0) + dist(0, 3) +
-                    dist(3, 4) + dist(4, 0) = 10 + 10 + sqrt(200) + 10 + 10 + sqrt(200) ~= 68.3
+                    This solution is valid and optimal.<br />
+                    The distance is dist(0, 1) + dist(1, 2) + dist(2, 0) + dist(0, 3) + dist(3, 4) + dist(4, 0) = 10 + 10 +
+                    sqrt(200) + 10 + 10 + sqrt(200) ≈ 68.3.
                 </li>
             </ul>
         </div>
     </div>
 
-    <!-- TIPS -->
-    <div>
-        <h1>Some Tips</h1>
-        <ul>
-            <li>
-                The VRP is a classic NP-Hard problem. Finding an optimal solution is incredibly difficult, so you should use
-                approximation algorithms - time to bring out your favorite metaheuristics!<br />
-            </li>
-            <li>
-                Have you already solved
-                <a href="https://www.codingame.com/multiplayer/optimization/travelling-salesman"
-                    >the Travelling Salesman Problem</a
-                >
-                ? If so, maybe you can reuse your code : every vehicle route is basically a small TSP.
-            </li>
-        </ul>
-    </div>
-
-    <!-- WARNING -->
+    <!-- TIPS & INSTANCES -->
     <div class="statement-section statement-warning">
-        <h1>
-            <span>About the Test & Validation Instances</span>
-        </h1>
         <div class="statement-warning-content">
+            <h1>Some Tips</h1>
+            <ul>
+                <li>
+                    The VRP is a classic NP-Hard problem. Finding an optimal solution is incredibly difficult, so you should use
+                    approximation algorithms - time to bring out your favorite metaheuristics!<br />
+                </li>
+                <li>
+                    Have you already solved
+                    <a href="https://www.codingame.com/multiplayer/optimization/travelling-salesman"
+                        >the Travelling Salesman Problem</a
+                    >
+                    ? If so, maybe you can reuse your code : every vehicle tour is basically a small TSP.
+                </li>
+            </ul>
+            <h1>
+                <span>About the Test & Validation Instances</span>
+            </h1>
             <ul>
                 <li>
                     The test instances are from the

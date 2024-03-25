@@ -3,7 +3,6 @@ package com.codingame.game;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import com.codingame.gameengine.core.AbstractPlayer.TimeoutException;
@@ -29,7 +28,7 @@ public class Referee extends AbstractReferee {
     }
 
     private List<Integer> colors = Arrays.asList(0x00bf7d, 0x00b4c5, 0x0073e6, 0x2546f0, 0x5928ed, 0xc44601, 0xf57600,
-            0x5ba300, 0x89ce00, 0xe6308a, 0xfcc9b5, 0xd9e4ff, 0xb3c7f7);
+            0x5ba300, 0x89ce00, 0xe6308a);
 
     @Override
     public void init() {
@@ -52,6 +51,7 @@ public class Referee extends AbstractReferee {
                 .setWidth(1920)
                 .setHeight(1080)
                 .setFillColor(0xD3D3D3);
+        graphicEntityModule.createSprite().setImage("france.jpg");
 
         // Draw the depot
         int depotx = this.instance.scaled_x.get(0);
@@ -97,21 +97,21 @@ public class Referee extends AbstractReferee {
             }
 
             // Calculate the optimality gap
-            double optimality_gap = Math.abs(instance.optimalValue - Math.round(total_distance))
-                    / instance.optimalValue;
+            double optimality_gap = (double) Math.abs(instance.optimalValue - Math.round(total_distance))
+                    / (double) instance.optimalValue;
 
             String winMessage;
             if (optimality_gap == 0.0) {
                 winMessage = "You found the optimum!! What a performance.";
-            } else if (optimality_gap < 0.05) {
+            } else if (optimality_gap <= 0.05) {
                 winMessage = "Fantastic job! Your solution is nearly perfect, just a few steps away from optimal!";
-            } else if (optimality_gap < 0.20) {
+            } else if (optimality_gap <= 0.20) {
                 winMessage = "Wow, that's a pretty solid solution!";
             } else {
                 winMessage = "Nice job ! Your solution is valid";
             }
-            winMessage += "\nTotal distance: " + Math.round(total_distance);
-            winMessage += "\nOptimality gap: " + optimality_gap;
+            winMessage += "\nTotal Distance: " + Math.round(total_distance);
+            winMessage += "\nOptimality Gap: " + (double) Math.round(optimality_gap * 1000) / 10.0 + "%";
 
             gameManager.winGame(winMessage);
 

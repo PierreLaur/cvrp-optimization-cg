@@ -1,0 +1,185 @@
+<div class="statement-body">
+    <div class="statement-section statement-goal">
+        <h2><span class="icon icon-goal">&nbsp;</span><span>Capacitated Vehicle Routing</span></h2>
+        <div class="question-statement">
+            Dans le
+            <a href="https://fr.wikipedia.org/wiki/Probl%C3%A8me_de_tourn%C3%A9es_de_v%C3%A9hicules">Vehicle Routing Problem</a>,
+            vous devez servir un ensemble de clients avec une flotte de véhicules. <br />
+            Dans cette variante, le <i>Capacitated Vehicle Routing Problem</i>, les véhicules ont une capacité limitée. <br />
+            <b>Vous devez trouver l'ensemble de tournées le plus court possible</b>.
+        </div>
+    </div>
+    <!-- RULES -->
+    <div class="statement-section statement-rules">
+        <h1>
+            <span class="icon icon-rules">&nbsp;</span>
+            <span>Règles</span>
+        </h1>
+        <div>
+            <div class="statement-rules-content">
+                <ul>
+                    <li>Les véhicules partent du <b>dépôt</b> (index 0) et doivent y retourner.<br /></li>
+                    <li>Chaque client doit être visité exactement une fois.<br /></li>
+                    <li>Le nombre de tournées ne doit pas dépasser le nombre de véhicules</li>
+                    <li>
+                        Pour chaque tournée, la somme des <b>demandes</b> des clients visités ne doit pas dépasser la capacité des
+                        véhicules.<br />
+                    </li>
+                    <li>
+                        La distance entre deux points est Euclidienne -
+                        <b style="font-family: monospace"
+                            >dist(a, b) = sqrt((x<sub>a</sub> - x<sub>b</sub>)<sup>2</sup> + (y<sub>a</sub> -
+                            y<sub>b</sub>)<sup>2</sup>)</b
+                        >
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROTOCOL -->
+    <div class="statement-section statement-protocol">
+        <h1>
+            <span class="icon icon-protocol">&nbsp;</span>
+            <span>Entrée du jeu</span>
+        </h1>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="text">
+                Le programme doit d'abord lire les entrées données, puis produire une seule ligne représentant les tournées des
+                véhicules.
+            </div>
+        </div>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Entrée</div>
+            <div class="text">
+                <p><span class="statement-lineno">Ligne 1: </span>un entier <var>k</var>, le nombre de véhicules</p>
+                <p><span class="statement-lineno">Ligne 2: </span>un entier <var>c</var>, la capacité des véhicules</p>
+                <p>
+                    <span class="statement-lineno">Ligne 3: </span>un entier <var>n</var>, le nombre de clients (+1 pour le dépôt)
+                </p>
+                <p>
+                    <span class="statement-lineno">Prochaines <var>n</var> lignes: 4 integers pour chaque client/dépôt</span>
+                </p>
+                <ul>
+                    <li><var>index</var>, le numéro du client (ou 0 pour le dépôt)</li>
+                    <li><var>x</var>, la première coordonnée du client ou dépôt</li>
+                    <li><var>y</var>, la deuxième coordonnée du client ou dépôt</li>
+                    <li><var>demand</var>, la demande du client. Le dépôt (<var>index</var>=0) a une demande de 0.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Sortie</div>
+            <div class="text">
+                <p>Une seule ligne contenant les tournées séparées par un point-virgule</p>
+                <p>Chaque tournée doit être les indices des clients séparés par un espace.</p>
+                <p>Le dépôt (0) ne doit pas être inclus dans la sortie.</p>
+            </div>
+        </div>
+
+        <!-- Protocol block -->
+        <div class="blk">
+            <div class="title">Contraintes</div>
+            <div class="text">
+                <const>5</const> <= <var>n</var> <= <const>200</const><br />
+                <br />Le temps de réponse est limité à <const>20</const> secondes.
+            </div>
+        </div>
+    </div>
+
+    <!-- EXAMPLES -->
+    <div class="statement-section statement-examples">
+        <h1>
+            <span class="icon icon-example">&nbsp;</span>
+            <span>Exemple</span>
+        </h1>
+
+        <div class="statement-examples-text">
+            Pour l'entrée du premier cas de test :<br /><br />
+            <span style="display: inline-block; min-width: 100px; font-family: monospace">5 4 10</span>
+            -> <var>k</var> = 4, <var>c</var> = 10, <var>n</var> = 5<br />
+            <span style="display: inline-block; min-width: 100px; font-family: monospace">0 0 0 0</span>
+            -> dépôt en (0,0) - pas de demande<br />
+            <span style="display: inline-block; min-width: 100px; font-family: monospace">1 0 10 3</span>
+            -> client 1 en (0,10) demande=3 <br />
+            <span style="display: inline-block; min-width: 100px; font-family: monospace">2 -10 10 3</span>
+            -> client 2 en (-10,10) demande=3<br />
+            <span style="display: inline-block; min-width: 100px; font-family: monospace">3 0 -10 3</span>
+            -> client 3 en (0,-10) demande=3<br />
+            <span style="display: inline-block; min-width: 100px; font-family: monospace">4 10 -10 3</span>
+            -> client 4 en (10,-10) demande=3<br /><br />
+
+            Quelques exemples de sorties au format correct :<br />
+
+            <ul>
+                <li>
+                    <b style="font-family: monospace">1 2 3;4</b><br />
+                    Le premier véhicule fait la tournée 0 -> 1 -> 2 -> 3 -> 0. Le deuxième véhicule fait la tournée 0 -> 4 ->
+                    0.<br />
+                    La distance est dist(0, 1) + dist(1, 2) + dist(2, 3) + dist(3, 0) + dist(0, 4) + dist(4, 0) = 10 + 10 +
+                    sqrt(500) + 10 + sqrt(200) + sqrt(200) ≈ 80.6.
+                </li>
+                <li>
+                    <b style="font-family: monospace">4 2 1 3</b><br />
+                    Le premier véhicule fait la tournée 0 -> 4 -> 2 -> 1 -> 3 -> 0.<br />
+                    Cette solution est invalide : la somme des demandes est 3 + 3 + 3 + 3 > <var>c</var> = 10.
+                </li>
+                <li>
+                    <b style="font-family: monospace">1;2 4;3 2</b><br />
+                    Cette solution est invalide : le client 2 est visité deux fois.
+                </li>
+                <li>
+                    <b style="font-family: monospace">1;3 4</b><br />
+                    Cette solution est invalide : le client 2 n'est pas visité.
+                </li>
+                <li>
+                    <b style="font-family: monospace">1 2;3 4</b><br />
+                    Cette solution est valide et optimale.<br />
+                    La distance est dist(0, 1) + dist(1, 2) + dist(2, 0) + dist(0, 3) + dist(3, 4) + dist(4, 0) = 10 + 10 +
+                    sqrt(200) + 10 + 10 + sqrt(200) ≈ 68.3.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CONSEILS & INSTANCES -->
+    <div class="statement-section statement-warning">
+        <div class="statement-warning-content">
+            <div>
+                <h1>Quelques conseils</h1>
+                <ul>
+                    <li>
+                        Le VRP est un problème académique NP-Difficile. Trouver une solution optimale est incroyablement
+                        difficile, donc vous devriez utiliser des algorithmes d'approximation - c'est l'heure de sortir vos
+                        métaheuristiques préférées !<br />
+                    </li>
+                    <li>
+                        Avez-vous déjà résolu le
+                        <a href="https://www.codingame.com/multiplayer/optimization/travelling-salesman">Travelling Salesman</a>
+                        (TSP ou Voyageur de Commerce) ? Si oui, peut-être que vous pouvez réutiliser votre code : chaque tournée
+                        de véhicule est essentiellement un petit TSP.
+                    </li>
+                </ul>
+            </div>
+
+            <h1>
+                <span>À propos des instances de test et de validation</span>
+            </h1>
+            <ul>
+                <li>
+                    Les instances de test proviennent de la
+                    <a href="http://vrp.atd-lab.inf.puc-rio.br/index.php/en/">CVRPLib</a> (sauf les 4 premières), spécifiquement
+                    des ensembles A (Augerat, 1995) et M (Christofides et al. 1979). N'hésitez pas à comparer vos résultats de
+                    test avec les optima connus.
+                </li>
+                <li>Les tests fournis et les validateurs utilisés pour le calcul du score sont similaires mais différents.</li>
+            </ul>
+        </div>
+    </div>
+</div>
