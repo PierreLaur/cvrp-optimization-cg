@@ -1,1 +1,1 @@
-{"title": {"2": "Seven Summits", "1": "Seven Summits"}, "testIn": "3\n85\n9\n0 997 265 0\n1 1424 372 19\n2 587 736 29\n3 155 162 23\n4 1159 558 21\n5 503 1011 10\n6 1692 564 15\n7 1751 759 3\n8 1186 280 41\n", "isTest": "true", "isValidator": "false"}
+{"title": {"2": "On Top Of The World", "1": "On Top Of The World"}, "testIn": "2\n85\n9\n0 1001 265 0\n1 1482 372 19\n2 540 736 29\n3 54 162 23\n4 1184 558 21\n5 446 1011 10\n6 1783 564 15\n7 1850 759 3\n8 1215 280 41\n", "isTest": "true", "isValidator": "false"}

@@ -55,10 +55,11 @@ public class Referee extends AbstractReferee {
         int depoty = this.instance.scaled_y.get(0);
         graphicEntityModule
                 .createRoundedRectangle()
-                .setRadius(10)
+                .setRadius(8)
                 .setLineColor(0x000000)
-                .setLineWidth(5)
+                .setLineWidth(4)
                 .setFillColor(0xFFFFFF)
+                .setAlpha(0.9)
                 .setX(depotx - 15)
                 .setY(depoty - 15)
                 .setWidth(30)
@@ -68,8 +69,9 @@ public class Referee extends AbstractReferee {
         for (int i = 1; i < this.instance.n; i++) {
             graphicEntityModule
                     .createCircle()
-                    .setRadius(10)
+                    .setRadius(6)
                     .setFillColor(0x000000)
+                    .setAlpha(0.9)
                     .setX(this.instance.scaled_x.get(i))
                     .setY(this.instance.scaled_y.get(i));
         }
@@ -83,8 +85,9 @@ public class Referee extends AbstractReferee {
                     .setX(0).setY(0)
                     .setWidth(1920)
                     .setHeight(1080)
-                    .setFillColor(0xD3D3D3);
+                    .setFillColor(0xFFFFFF);
         } else {
+            System.err.println("Background: " + this.instance.backgroundFile);
             graphicEntityModule.createSprite().setImage(this.instance.backgroundFile)
                     .setBaseHeight(1080).setBaseWidth(1920);
         }

@@ -35,12 +35,12 @@ public class Instance {
     Integer[] noMapInstances = { 5, 101, 121, 151, 200 };
     int[] optimalValues = {
             68,
-            0,
+            0, 0, 0,
             820, 1034, 1015, 1275 // benchmark
     };
     int[] n_values = {
             5,
-            16,
+            16, 50, 199,
             101, 121, 151, 200, // benchmark
     };
 
@@ -83,6 +83,7 @@ public class Instance {
             scaleCoordinates();
         } else {
             backgroundFile = this.n + ".png";
+            System.err.println("Background: " + backgroundFile);
         }
 
         // Set the optimal value
