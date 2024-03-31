@@ -87,10 +87,44 @@ public class Referee extends AbstractReferee {
                     .setHeight(1080)
                     .setFillColor(0xFFFFFF);
         } else {
-            System.err.println("Background: " + this.instance.backgroundFile);
             graphicEntityModule.createSprite().setImage(this.instance.backgroundFile)
                     .setBaseHeight(1080).setBaseWidth(1920);
         }
+    }
+
+    public String getWinMessage() {
+        String winMessage = "";
+
+        if (instance.isBenchmark) {
+            double optimality_gap = (double) Math.abs(instance.optimalValue - Math.round(total_distance))
+                    / (double) instance.optimalValue;
+
+            if (optimality_gap == 0.0) {
+                winMessage += "You found the optimum!! What a performance.";
+            } else if (optimality_gap <= 0.05) {
+                winMessage += "Fantastic job! Your solution is nearly perfect, just a few steps away from optimal!";
+            } else if (optimality_gap <= 0.20) {
+                winMessage += "Wow, that's a pretty solid solution!";
+            } else {
+                winMessage += "Nice job ! Your solution is valid";
+            }
+            winMessage += "\nOptimality Gap: " + (double) Math.round(optimality_gap * 1000) / 10.0 + "%";
+        } else if (instance.optimalValue != 0) {
+            double estimated_optimality_gap = (double) Math.abs(instance.optimalValue - Math.round(total_distance))
+                    / (double) instance.optimalValue;
+
+            if (estimated_optimality_gap <= 0.0) {
+                winMessage += "What an incredible solution !! It might even be optimal...";
+            } else if (estimated_optimality_gap <= 0.05) {
+                winMessage += "Fantastic job! That's a really high-quality solution!";
+            } else if (estimated_optimality_gap <= 0.20) {
+                winMessage += "Wow, that's a pretty solid solution!";
+            } else {
+                winMessage += "Nice job ! Your solution is valid";
+            }
+        }
+        winMessage += "\nTotal Distance: " + Math.round(total_distance);
+        return winMessage;
     }
 
     @Override
@@ -111,24 +145,7 @@ public class Referee extends AbstractReferee {
                 return;
             }
 
-            String winMessage = "";
-            if (instance.optimalValue != 0) {
-                // Calculate the optimality gap
-                double optimality_gap = (double) Math.abs(instance.optimalValue - Math.round(total_distance))
-                        / (double) instance.optimalValue;
-
-                if (optimality_gap == 0.0) {
-                    winMessage += "You found the optimum!! What a performance.";
-                } else if (optimality_gap <= 0.05) {
-                    winMessage += "Fantastic job! Your solution is nearly perfect, just a few steps away from optimal!";
-                } else if (optimality_gap <= 0.20) {
-                    winMessage += "Wow, that's a pretty solid solution!";
-                } else {
-                    winMessage += "Nice job ! Your solution is valid";
-                }
-                winMessage += "\nOptimality Gap: " + (double) Math.round(optimality_gap * 1000) / 10.0 + "%";
-            }
-            winMessage += "\nTotal Distance: " + Math.round(total_distance);
+            String winMessage = getWinMessage();
             gameManager.winGame(winMessage);
 
         } catch (TimeoutException e) {

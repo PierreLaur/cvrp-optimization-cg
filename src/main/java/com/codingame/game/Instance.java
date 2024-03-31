@@ -32,17 +32,18 @@ public class Instance {
     ArrayList<Integer> scaled_x = new ArrayList<>();
     ArrayList<Integer> scaled_y = new ArrayList<>();
 
-    Integer[] noMapInstances = { 5, 101, 121, 151, 200 };
+    Integer[] noMapInstances = { 5, 65, 121, 151, 200 };
     int[] optimalValues = {
             68,
-            0, 0, 0,
-            820, 1034, 1015, 1275 // benchmark
+            5234, 7598, 8522, 15713, 9432, 27778,
+            1174, 1034, 1015, 1275 // benchmark
     };
     int[] n_values = {
             5,
-            16, 50, 199,
-            101, 121, 151, 200, // benchmark
+            9, 32, 50, 80, 101, 199,
+            65, 121, 151, 200, // benchmark
     };
+    boolean isBenchmark = false;
 
     public void scaleCoordinates() {
         int minx = scaled_x.stream().min(Integer::compareTo).get();
@@ -80,10 +81,10 @@ public class Instance {
 
         List<Integer> noMapInstancesList = Arrays.asList(noMapInstances);
         if (noMapInstancesList.contains(this.n)) {
+            isBenchmark = true;
             scaleCoordinates();
         } else {
             backgroundFile = this.n + ".png";
-            System.err.println("Background: " + backgroundFile);
         }
 
         // Set the optimal value
