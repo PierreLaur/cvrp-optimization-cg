@@ -1,6 +1,1 @@
-{
-    "title": { "2": "Example", "1": "Example" },
-    "testIn": "4\n10\n5\n0 0 0 0\n1 0 10 3\n2 -10 10 3\n3 0 -10 3\n4 10 -10 3\n",
-    "isTest": "true",
-    "isValidator": "false"
-}
+{"title": {"2": "Example", "1": "Example"}, "testIn": "4\n10\n5\n0 0 0 0\n1 0 10 3\n2 -10 10 3\n3 0 -10 3\n4 10 -10 3\n", "isTest": "true", "isValidator": "false"}

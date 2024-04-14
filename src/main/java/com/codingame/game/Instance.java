@@ -35,12 +35,12 @@ public class Instance {
     Integer[] noMapInstances = { 5, 65, 121, 151, 200 };
     int[] optimalValues = {
             68,
-            5234, 7598, 8522, 15713, 9432, 27778,
+            5234, 0, 7598, 8522, 15713, 9432, 27778,
             1174, 1034, 1015, 1275 // benchmark
     };
     int[] n_values = {
             5,
-            9, 32, 50, 80, 101, 199,
+            9, 16, 32, 50, 80, 101, 199,
             65, 121, 151, 200, // benchmark
     };
     boolean isBenchmark = false;
