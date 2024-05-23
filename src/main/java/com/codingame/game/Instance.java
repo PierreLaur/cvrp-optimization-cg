@@ -26,24 +26,30 @@ public class Instance {
     }
 
     int n, k, capacity;
-    public int optimalValue;
+    public int bestKnownValue;
+    public boolean optimumKnown;
     String backgroundFile;
     Map<Integer, Customer> customers = new HashMap<>();
     ArrayList<Integer> scaled_x = new ArrayList<>();
     ArrayList<Integer> scaled_y = new ArrayList<>();
 
     Integer[] noMapInstances = { 5, 65, 121, 151, 200 };
-    int[] optimalValues = {
+    int[] bestKnownValues = {
             68,
             5234, 5018, 4336, 7598, 8522, 15713, 9432, 27778,
             1174, 1034, 1015, 1275 // benchmark
     };
+    boolean[] isOptimal = {
+            true,
+            true, true, true, false, false, false, false, false,
+            true, true, true, true, // benchmark
+    };
+
     int[] n_values = {
             5,
             9, 16, 21, 32, 50, 80, 101, 199,
             65, 121, 151, 200, // benchmark
     };
-    boolean isBenchmark = false;
 
     public void scaleCoordinates() {
         int minx = scaled_x.stream().min(Integer::compareTo).get();
@@ -81,16 +87,17 @@ public class Instance {
 
         List<Integer> noMapInstancesList = Arrays.asList(noMapInstances);
         if (noMapInstancesList.contains(this.n)) {
-            isBenchmark = true;
             scaleCoordinates();
         } else {
             backgroundFile = this.n + ".png";
         }
 
-        // Set the optimal value
-        for (int i = 0; i < optimalValues.length; i++) {
+        // Set the best known value
+        for (int i = 0; i < bestKnownValues.length; i++) {
             if (n == n_values[i]) {
-                this.optimalValue = optimalValues[i];
+                this.bestKnownValue = bestKnownValues[i];
+                this.optimumKnown = isOptimal[i];
+                break;
             }
         }
     }

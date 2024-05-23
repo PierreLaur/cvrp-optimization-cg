@@ -95,9 +95,9 @@ public class Referee extends AbstractReferee {
     public String getWinMessage() {
         String winMessage = "";
 
-        if (instance.isBenchmark) {
-            double optimality_gap = (double) Math.abs(instance.optimalValue - Math.round(total_distance))
-                    / (double) instance.optimalValue;
+        if (instance.optimumKnown) {
+            double optimality_gap = (double) Math.abs(instance.bestKnownValue - Math.round(total_distance))
+                    / (double) instance.bestKnownValue;
 
             if (optimality_gap == 0.0) {
                 winMessage += "You found the optimum!! What a performance.";
@@ -109,9 +109,9 @@ public class Referee extends AbstractReferee {
                 winMessage += "Nice job ! Your solution is valid";
             }
             winMessage += "\nOptimality Gap: " + (double) Math.round(optimality_gap * 1000) / 10.0 + "%";
-        } else if (instance.optimalValue != 0) {
-            double estimated_optimality_gap = (double) Math.abs(instance.optimalValue - Math.round(total_distance))
-                    / (double) instance.optimalValue;
+        } else {
+            double estimated_optimality_gap = (double) Math.abs(instance.bestKnownValue - Math.round(total_distance))
+                    / (double) instance.bestKnownValue;
 
             if (estimated_optimality_gap <= 0.0) {
                 winMessage += "What an incredible solution !! It might even be optimal...";
@@ -122,6 +122,8 @@ public class Referee extends AbstractReferee {
             } else {
                 winMessage += "Nice job ! Your solution is valid";
             }
+            winMessage += "\nGap to best known solution: " + (double) Math.round(estimated_optimality_gap * 1000) / 10.0
+                    + "%";
         }
         winMessage += "\nTotal Distance: " + Math.round(total_distance);
         return winMessage;

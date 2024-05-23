@@ -8,7 +8,7 @@ public class Main {
         gameRunner.setAgent(Solution.class);
 
         // Sets a test case
-        gameRunner.setTestCase("test8.json");
+        gameRunner.setTestCase("test4.json");
 
         gameRunner.start();
     }
