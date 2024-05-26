@@ -134,7 +134,9 @@ public class Referee extends AbstractReferee {
             double estimated_optimality_gap = (double) (Math.round(total_distance) - instance.bestKnownValue)
                     / (double) instance.bestKnownValue;
 
-            if (estimated_optimality_gap <= 0.0) {
+            if (estimated_optimality_gap < 0.0) {
+                winMessage += "You improved over the best known solution !! Please contact the creator of this puzzle to inform him of your achievement and earn his eternal respect";
+            } else if (estimated_optimality_gap == 0.0) {
                 winMessage += "What an incredible solution !! It might even be optimal...";
             } else if (estimated_optimality_gap <= 0.05) {
                 winMessage += "Fantastic job! That's a really high-quality solution!";
