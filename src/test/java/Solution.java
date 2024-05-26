@@ -26,7 +26,7 @@ public class Solution {
         System.err.println(result);
     }
 
-    public static List<List<Integer>> solve_trivial(int n, int k, int capacity, HashMap<Integer, Customer> customers) {
+    public static List<List<Integer>> solve_trivial(int n, int capacity, HashMap<Integer, Customer> customers) {
 
         List<List<Integer>> tours = new ArrayList<>();
 
@@ -54,9 +54,8 @@ public class Solution {
         HashMap<Integer, Customer> customers = new HashMap<>();
 
         Scanner scanner = new Scanner(System.in);
-        int k = scanner.nextInt();
-        int capacity = scanner.nextInt();
         int n = scanner.nextInt();
+        int capacity = scanner.nextInt();
         for (int i = 0; i < n; i++) {
             int id = scanner.nextInt();
             int x = scanner.nextInt();
@@ -65,7 +64,7 @@ public class Solution {
             customers.put(id, new Customer(id, x, y, demand));
         }
 
-        List<List<Integer>> tours = solve_trivial(n, k, capacity, customers);
+        List<List<Integer>> tours = solve_trivial(n, capacity, customers);
 
         String solution = "";
 

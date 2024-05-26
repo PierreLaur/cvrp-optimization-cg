@@ -92,14 +92,35 @@ public class Referee extends AbstractReferee {
         }
     }
 
+    public String percentGap(double gap) {
+        double multiplier = 1.0;
+        double formattedGap = (double) Math.floor(100 * gap * multiplier) / multiplier;
+
+        // Add some decimals if the gap is too small
+        while (formattedGap == 0.0 && multiplier <= 100000.0) {
+            multiplier *= 10.0;
+            formattedGap = (double) Math.floor(100 * gap * multiplier) / multiplier;
+        }
+
+        // truncate the .0 if applicable
+        if (formattedGap % 1.0 == 0.0) {
+            return String.valueOf((int) formattedGap);
+        } else {
+            return String.valueOf(formattedGap);
+        }
+
+    }
+
     public String getWinMessage() {
         String winMessage = "";
 
         if (instance.optimumKnown) {
-            double optimality_gap = (double) Math.abs(instance.bestKnownValue - Math.round(total_distance))
+            double optimality_gap = (double) (Math.round(total_distance) - instance.bestKnownValue)
                     / (double) instance.bestKnownValue;
 
-            if (optimality_gap == 0.0) {
+            if (optimality_gap < 0.0) {
+                winMessage += "Your solution is better than the known optimum. Is this a validator ? If not, something went wrong : please contact the creator of this puzzle";
+            } else if (optimality_gap == 0.0) {
                 winMessage += "You found the optimum!! What a performance.";
             } else if (optimality_gap <= 0.05) {
                 winMessage += "Fantastic job! Your solution is nearly perfect, just a few steps away from optimal!";
@@ -108,9 +129,9 @@ public class Referee extends AbstractReferee {
             } else {
                 winMessage += "Nice job ! Your solution is valid";
             }
-            winMessage += "\nOptimality Gap: " + (double) Math.round(optimality_gap * 1000) / 10.0 + "%";
+            winMessage += "\nOptimality Gap: " + percentGap(optimality_gap) + "%";
         } else {
-            double estimated_optimality_gap = (double) Math.abs(instance.bestKnownValue - Math.round(total_distance))
+            double estimated_optimality_gap = (double) (Math.round(total_distance) - instance.bestKnownValue)
                     / (double) instance.bestKnownValue;
 
             if (estimated_optimality_gap <= 0.0) {
@@ -122,7 +143,8 @@ public class Referee extends AbstractReferee {
             } else {
                 winMessage += "Nice job ! Your solution is valid";
             }
-            winMessage += "\nGap to best known solution: " + (double) Math.round(estimated_optimality_gap * 1000) / 10.0
+            winMessage += "\nGap to best known solution: "
+                    + percentGap(estimated_optimality_gap)
                     + "%";
         }
         winMessage += "\nTotal Distance: " + Math.round(total_distance);
@@ -245,11 +267,6 @@ public class Referee extends AbstractReferee {
 
             tours.add(nodes);
 
-        }
-
-        if (tours.size() > this.instance.k) {
-            gameManager.loseGame("Too many vehicles used !");
-            status = Status.LOSS;
         }
 
         if (visited_nodes.size() != instance.n - 1) {

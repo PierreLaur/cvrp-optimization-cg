@@ -25,7 +25,7 @@ public class Instance {
         }
     }
 
-    int n, k, capacity;
+    int n, capacity;
     public int bestKnownValue;
     public boolean optimumKnown;
     String backgroundFile;
@@ -36,7 +36,7 @@ public class Instance {
     Integer[] noMapInstances = { 5, 65, 121, 151, 200 };
     int[] bestKnownValues = {
             68,
-            5234, 5018, 4336, 7598, 8522, 15713, 9432, 27778,
+            5234, 5018, 4336, 7598, 7900, 15713, 9432, 27778,
             1174, 1034, 1015, 1275 // benchmark
     };
     boolean[] isOptimal = {
@@ -70,11 +70,10 @@ public class Instance {
 
     public Instance(ArrayList<String> input) throws IOException {
 
-        this.k = Integer.parseInt(input.get(0));
+        this.n = Integer.parseInt(input.get(0));
         this.capacity = Integer.parseInt(input.get(1));
-        this.n = Integer.parseInt(input.get(2));
 
-        for (int i = 3; i < this.n + 3; i++) {
+        for (int i = 2; i < this.n + 2; i++) {
             String[] cust_inputs = input.get(i).split(" ");
             int id = Integer.parseInt(cust_inputs[0]);
             int x = Integer.parseInt(cust_inputs[1]);
@@ -106,7 +105,6 @@ public class Instance {
         // Pretty-prints the instance data
         StringBuilder sb = new StringBuilder();
         sb.append("n: " + n + "\n");
-        sb.append("k: " + k + "\n");
         sb.append("capacity: " + capacity + "\n");
         sb.append("customers:\n");
         for (Customer c : customers.values()) {

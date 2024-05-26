@@ -20,7 +20,6 @@
                 <ul>
                     <li>Les véhicules partent du <b>dépôt</b> (index 0) et doivent y retourner.<br /></li>
                     <li>Chaque client doit être visité exactement une fois.<br /></li>
-                    <li>Le nombre de tournées ne doit pas dépasser le nombre de véhicules</li>
                     <li>
                         Pour chaque tournée, la somme des <b>demandes</b> des clients visités ne doit pas dépasser la capacité des
                         véhicules.<br />
@@ -56,11 +55,10 @@
         <div class="blk">
             <div class="title">Entrée</div>
             <div class="text">
-                <p><span class="statement-lineno">Ligne 1: </span>un entier <var>k</var>, le nombre de véhicules</p>
-                <p><span class="statement-lineno">Ligne 2: </span>un entier <var>c</var>, la capacité des véhicules</p>
                 <p>
-                    <span class="statement-lineno">Ligne 3: </span>un entier <var>n</var>, le nombre de clients (+1 pour le dépôt)
+                    <span class="statement-lineno">Ligne 1: </span>un entier <var>n</var>, le nombre de clients (+1 pour le dépôt)
                 </p>
+                <p><span class="statement-lineno">Ligne 2: </span>un entier <var>c</var>, la capacité des véhicules</p>
                 <p>
                     <span class="statement-lineno">Prochaines <var>n</var> lignes:</span> 4 entiers séparés par un espace pour
                     chaque client/dépôt
@@ -103,8 +101,8 @@
 
         <div class="statement-examples-text">
             Pour l'entrée du premier cas de test :<br /><br />
-            <span style="display: inline-block; min-width: 100px; font-family: monospace">4 10 5</span>
-            -> <var>k</var> = 4, <var>c</var> = 10, <var>n</var> = 5<br />
+            <span style="display: inline-block; min-width: 100px; font-family: monospace">5 10</span>
+            -> <var>n</var> = 5, <var>c</var> = 10<br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">0 0 0 0</span>
             -> dépôt en (0,0) - pas de demande<br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">1 0 10 3</span>

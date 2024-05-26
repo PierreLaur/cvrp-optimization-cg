@@ -1,6 +1,5 @@
-read k:int
-read c:int
 read n:int
+read c:int
 loop n read index:int x:int y:int demand:int
 write 1 2 3;4
 
@@ -8,9 +7,8 @@ STATEMENT
 Challenge yourself with this classic NP-Hard optimization problem !
 
 INPUT
-k: The number of vehicles
-c: The capacity of the vehicles
 n: The number of customers
+c: The capacity of the vehicles
 index: The index of the customer (0 is the depot)
 x: The x coordinate of the customer
 y: The y coordinate of the customer

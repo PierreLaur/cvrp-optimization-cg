@@ -19,7 +19,6 @@
                 <ul>
                     <li>The vehicles start from the <b>depot</b> (index 0) and must return to it.<br /></li>
                     <li>Every customer must be visited exactly once.<br /></li>
-                    <li>The number of tours must not exceed the number of vehicles.</li>
                     <li>
                         For each tour, the sum of the <b>demands</b> of the customers visited must not exceed the capacity of the
                         vehicles.<br />
@@ -54,12 +53,11 @@
         <div class="blk">
             <div class="title">Input</div>
             <div class="text">
-                <p><span class="statement-lineno">Line 1: </span>an integer <var>k</var>, the number of vehicles</p>
-                <p><span class="statement-lineno">Line 2: </span>an integer <var>c</var>, the capacity of the vehicles</p>
                 <p>
-                    <span class="statement-lineno">Line 3: </span>an integer <var>n</var>, the number of customers (+1 for the
+                    <span class="statement-lineno">Line 1: </span>an integer <var>n</var>, the number of customers (+1 for the
                     depot)
                 </p>
+                <p><span class="statement-lineno">Line 2: </span>an integer <var>c</var>, the capacity of the vehicles</p>
                 <p>
                     <span class="statement-lineno">Next <var>n</var> lines:</span> 4 space-separated integers for each
                     customer/depot
@@ -103,7 +101,7 @@
         <div class="statement-examples-text">
             Given the input of the first test case :<br /><br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">4 10 5</span>
-            -> <var>k</var> = 4, <var>c</var> = 10, <var>n</var> = 5<br />
+            -> <var>n</var> = 10, <var>c</var> = 10<br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">0 0 0 0</span>
             -> depot at (0,0) - no demand<br />
             <span style="display: inline-block; min-width: 100px; font-family: monospace">1 0 10 3</span>
